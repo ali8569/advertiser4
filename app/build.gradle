@@ -47,6 +47,19 @@ android {
             path '../android-serialport-api/jni/Android.mk'
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            //def flavor = variant.productFlavors[0].name.capitalize()
+            //def version = variant.versionName
+            //def date = new Date()
+            //def formattedDate = date.format('ddMMyy')
+            //def buildType = variant.variantData.variantConfiguration.buildType.name
+            //def versionCode = variant.versionCode
+            def version = "V${vMajor}.${vMinor}.${vPatch}_${vSuffix}"
+            outputFileName = "Advertiser_${version}.apk"
+        }
+    }
 }
 
 
