@@ -17,7 +17,7 @@ repositories {
 def vMajor = 4
 def vMinor = 4
 def vPatch = 4
-def vSuffix = "S4NM"
+def vSuffix = "iot20_s3_int"
 
 android {
     compileSdkVersion 27

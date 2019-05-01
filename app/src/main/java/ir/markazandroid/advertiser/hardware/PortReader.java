@@ -170,12 +170,11 @@ public class PortReader extends Thread {
         String[] devices = portFinder.getAllDevicesPath();
         String portName="";
 
-        //TODO S4
         try {
-            serialPort = new SerialPort(new File("/dev/ttyS4"),9600,0);
+            serialPort = new SerialPort(new File("/dev/ttyS3"),9600,0);
             inputStream=serialPort.getInputStream();
             found=true;
-            portName="/dev/ttyS4";
+            portName="/dev/ttyS3";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -312,14 +311,12 @@ public class PortReader extends Thread {
     }
 
     private void sendBlockViewSignal(){
-        //TODO NM
         //handler.post(()-> Toast.makeText(context,"Block",Toast.LENGTH_SHORT).show());
         Signal signal = new Signal("screen block",Signal.SIGNAL_SCREEN_BLOCK);
         //getSignalManager().sendMainSignal(signal);
     }
 
     private void sendUnBlockViewSignal(){
-        //TODO NM
         //handler.post(()-> Toast.makeText(context,"Unblock",Toast.LENGTH_SHORT).show());
         Signal signal = new Signal("screen unblock",Signal.SIGNAL_SCREEN_UNBLOCK);
         //getSignalManager().sendMainSignal(signal);

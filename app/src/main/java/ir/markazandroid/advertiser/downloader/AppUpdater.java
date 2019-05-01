@@ -117,8 +117,8 @@ public class AppUpdater {
                 "application/vnd.android.package-archive");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         handler.post(() -> {
-            installUpdate();
-            //context.startActivity(intent);
+            //installUpdate();
+            context.startActivity(intent);
             stop();
         });
     }
