@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logotype"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/goldTitle"
+        android:background="@android:color/black"
+        android:textSize="21sp"
+        android:padding="4dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@android:color/white" />
+
+    <!--<com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:keepScreenOn="true"
+        app:cameraFacing="front" />-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/photo"
+        android:layout_below="@id/goldTitle" />
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:visibility="invisible"
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bmb_buttonEnum="textOutsideCircle"
+        app:bmb_piecePlaceEnum="piecePlace_dot_4_2"
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_4_2"
+        android:paddingRight="4dp"
+        android:paddingLeft="4dp"
+        app:bmb_buttonRadius="16dp" />
+
+    <ir.markazandroid.advertiser.view.gold.ScannerAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#44000000"
+        android:id="@+id/scanner_animation"
+        android:visibility="gone"
+        android:layout_below="@id/goldTitle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/goldShowerLayout"
+        android:visibility="invisible">
+
+        <ir.markazandroid.advertiser.view.gold.CameraOverlayView
+            android:id="@+id/overlay_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_left"
+            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_right"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:textSize="21sp"
+            android:textColor="@android:color/white"
+            android:background="@color/green"
+            android:maxEms="7"
+            android:layout_margin="64dp"
+            android:paddingRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:paddingLeft="12dp"
+            android:lineSpacingMultiplier="1.2" />
+
+        <ProgressBar
+            android:id="@+id/processbar"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/menuButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_blue"
+            android:text="نوع جواهر"
+            android:textSize="21sp"
+            android:textColor="@android:color/white"
+            android:layout_marginRight="10dp" />
+
+
+        <!--<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/black_box"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:civ_circle_background_color="@android:color/white"
+                android:padding="10dp"
+                android:src="@drawable/necklace"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/trans_white_box"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:civ_circle_background_color="@android:color/white"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/earing"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:civ_circle_background_color="@android:color/white"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/bracelet"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:civ_circle_background_color="@android:color/white"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ring"
+                />
+        </LinearLayout>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/black_box"
+            android:id="@+id/goldChooser"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/take_photo"
+        android:background="@drawable/white_box"
+        android:src="@drawable/ic_photo_camera_blue_24dp"
+        android:layout_below="@id/goldTitle" />
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/refresh"
+        android:src="@drawable/ic_refresh_blue_24dp"
+        android:background="@drawable/white_box"
+        android:layout_below="@id/goldTitle" />
+
+    <ir.markazandroid.advertiser.view.MQTextView
+        android:layout_toLeftOf="@id/take_photo"
+        android:layout_toRightOf="@id/refresh"
+        android:layout_margin="8dp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:gravity="center"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl"
+        android:padding="8dp"
+        android:id="@+id/goldDownlaoderStat"
+        android:visibility="gone"
+        android:textSize="21sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@drawable/box_bg" />
+
+
+</RelativeLayout>

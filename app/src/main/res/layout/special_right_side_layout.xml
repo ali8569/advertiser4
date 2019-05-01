@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/logo_asli"
+        android:id="@+id/content1"
+        android:layout_weight="45"
+        android:scaleType="fitXY" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="45"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/content2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/logo_asli" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="match_parent"></View>
+
+        <FrameLayout
+            android:id="@+id/content3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/logo_asli" />
+
+        <!--<ir.mirrajabi.persiancalendar.PersianCalendarView
+            android:id="@+id/persian_calendar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:pcv_colorBackground="#292929"
+            app:pcv_colorDayName="#bab6b6"
+            app:pcv_colorHoliday="#ffd506"
+            app:pcv_colorHolidaySelected="#f1f2f3"
+            app:pcv_colorNormalDaySelected="#d9d9d9"
+            app:pcv_colorNormalDay="#f3f4f5"
+            app:pcv_eventUnderlineColor="#02f0f0"/>-->
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+
+</LinearLayout>
