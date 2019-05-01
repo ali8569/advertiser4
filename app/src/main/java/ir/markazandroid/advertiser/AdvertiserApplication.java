@@ -278,12 +278,23 @@ public class AdvertiserApplication extends Application implements SignalReceiver
             Message outputMessage = new Message();
             outputMessage.setMessageId(message.getMessageId());
             outputMessage.setType(Message.RESPONSE);
-            getConsole().executeAsync(message.getMessage().substring("terminal ".length(), message.getMessage().length())
-                    , (resultCode, output) -> {
-                        outputMessage.setTime(System.currentTimeMillis());
-                        outputMessage.setMessage("Process exit code="+resultCode+"\r\n"+output);
-                        getSocketMessageController().sendOutMessage(outputMessage);
-                    });
+            String tcmd = message.getMessage().substring("terminal ".length(), message.getMessage().length());
+            if (tcmd.startsWith("-w ")){
+                tcmd=tcmd.substring("-w ".length(), tcmd.length());
+                getConsole().w(tcmd
+                        , (resultCode, output) -> {
+                            outputMessage.setTime(System.currentTimeMillis());
+                            outputMessage.setMessage("Process exit code="+resultCode+"\r\n"+output);
+                            getSocketManager().send(getParser().get(outputMessage).toString());
+                        });
+            }
+            else
+                getConsole().executeAsync(tcmd
+                        , (resultCode, output) -> {
+                            outputMessage.setTime(System.currentTimeMillis());
+                            outputMessage.setMessage("Process exit code="+resultCode+"\r\n"+output);
+                            getSocketManager().send(getParser().get(outputMessage).toString());
+                        });
         }
         else if (message.getMessage().startsWith("arduino ")){
             //T:HH:MM:SS:DD:MM:YY:HH:MM:HH:MM#

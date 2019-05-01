@@ -87,6 +87,24 @@ public class Console implements Closeable {
             e.printStackTrace();
         }
     }
+    public void w(String s,ConsoleOut consoleOut){
+        try {
+            process=Runtime.getRuntime().exec(s);
+            ReaderThread readerThread = new ReaderThread(process);
+            readerThread.setConsoleOut(consoleOut);
+            readerThread.start();
+            //os.writeBytes("exit\n");
+            //os.flush();
+            process.waitFor();
+            //writer.write(s);
+            //writer.flush();
+            //process.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void update(String s){
         try {
