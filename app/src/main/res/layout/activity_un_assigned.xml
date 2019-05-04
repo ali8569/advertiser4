@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UnAssignedActivity"
-    android:background="@drawable/logo_asli">
+    tools:context=".activity.UnAssignedActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/logo_full_h"
+        android:background="@android:color/white" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,5 +24,6 @@
         android:gravity="center"
         android:textColor="@android:color/black"
         android:text="با استفاده از مشخصات ارائه شده همراه دستگاه، لطفا این دستگاه را در سایت ثبت کنید."/>
+
 
 </android.support.constraint.ConstraintLayout>

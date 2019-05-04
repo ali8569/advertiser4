@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/logo_asli"
+        android:background="@drawable/logo_full_h"
         android:id="@+id/content1"
         android:layout_weight="45"
         android:scaleType="fitXY" />
@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/logo_asli"/>
+            android:background="@drawable/logo_full_v" />
 
         <View
             android:layout_width="3dp"
@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/logo_asli"/>
+            android:background="@drawable/logo_full_v" />
 
         <!--<ir.mirrajabi.persiancalendar.PersianCalendarView
             android:id="@+id/persian_calendar"

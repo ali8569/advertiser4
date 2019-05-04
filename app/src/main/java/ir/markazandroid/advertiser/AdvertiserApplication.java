@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -104,7 +103,7 @@ public class AdvertiserApplication extends Application implements SignalReceiver
 
         getPoliceBridge();
         //installApp();
-        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
+        Fabric.with(this, new Crashlytics());
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/advertiser/image");
         myDir.mkdirs();
