@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
@@ -22,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Calendar;
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
@@ -30,9 +27,7 @@ import ir.markazandroid.advertiser.activity.MainActivity;
 import ir.markazandroid.advertiser.aidl.PoliceBridge;
 import ir.markazandroid.advertiser.aidl.PoliceHandlerHelper;
 import ir.markazandroid.advertiser.db.DataBase;
-import ir.markazandroid.advertiser.downloader.AppUpdater;
 import ir.markazandroid.advertiser.downloader.RecordDownloader;
-import ir.markazandroid.advertiser.hardware.PortReader;
 import ir.markazandroid.advertiser.network.JSONParser.Parser;
 import ir.markazandroid.advertiser.network.NetworkClient;
 import ir.markazandroid.advertiser.object.Content;
@@ -48,7 +43,6 @@ import ir.markazandroid.advertiser.signal.Signal;
 import ir.markazandroid.advertiser.signal.SignalManager;
 import ir.markazandroid.advertiser.signal.SignalReceiver;
 import ir.markazandroid.advertiser.util.PreferencesManager;
-import ir.markazandroid.advertiser.util.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static android.content.pm.ApplicationInfo.FLAG_LARGE_HEAP;
@@ -71,7 +65,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
     private RecordDownloader recordDownloader;
     private boolean isInternetConnected = false;
     private String frontActivity;
-    private PortReader portReader;
     private PoliceBridge policeBridge;
 
     private boolean touchDisabled;
@@ -131,10 +124,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
 
         CalligraphyConfig.initDefault(config.build());
 
-        AppUpdater updater = new AppUpdater(this);
-        updater.start();
-        //updater.installApp();
-        //updater.start();
 
         Intent intent = new Intent(this,KeepAliveService.class);
         startService(intent);
@@ -143,13 +132,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
 
         //getPortReader().init();
 
-        //TODO Port Reader
-        getPortReader().start();
-
-        if (getPreferencesManager().getArduinoOnOffTime()!=null){
-            String command = getPreferencesManager().getArduinoOnOffTime();
-            setArdunoTime(command);
-        }
 
 
         //getSocketManager().connect();
@@ -168,44 +150,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
         }*/
     }
 
-    private boolean setArdunoTime(String command){
-        //17:0:9:0
-        String[] times = command.split(":");
-        Calendar calendar = Calendar.getInstance();
-        int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int nowMinute= calendar.get(Calendar.MINUTE);
-        int now = Integer.parseInt(String.format(Locale.US,"%02d%02d",nowHour,nowMinute));
-        int off = Integer.parseInt(times[0]+times[1]);
-        int on = Integer.parseInt(times[2]+times[3]);
-
-        if (on==off && on==0){
-            return getPortReader().write(generateArduinoTime(command));
-        }
-        if (on==off) return false;
-
-        if ((off<on && now >= off && now < on) || (off>on && !(now >= on && now < off))) {
-            int rem = 60-nowMinute;
-            if (rem<=5){
-                nowHour+=1;
-                nowMinute=5-rem;
-            }
-            else nowMinute+=5;
-
-            if (Integer.parseInt(String.format(Locale.US,"%02d%02d",nowHour,nowMinute))>=on && Integer.parseInt(String.format(Locale.US,"%02d%02d",nowHour,nowMinute))-on<6){
-                return getPortReader().write(generateArduinoTime(command));
-            }
-            command=nowHour+":"+nowMinute+":"+times[2]+":"+times[3];
-            new Handler(getMainLooper()).post(()->Toast.makeText(this,"Off Time, turning off 5 minute",Toast.LENGTH_LONG).show());
-            return getPortReader().write(generateArduinoTime(command));
-
-        }
-        return getPortReader().write(generateArduinoTime(command));
-    }
-
-
-    private String generateArduinoTime(String onOffTime){
-        return Utils.getNowForArduino() + onOffTime+"#";
-    }
 
 
     static int calculateMemoryCacheSize(Context context) {
@@ -305,11 +249,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
     }
 
 
-    public PortReader getPortReader() {
-        if (portReader==null) portReader=new PortReader(this);
-        return portReader;
-    }
-
     public boolean isTouchDisabled() {
         return touchDisabled;
     }
@@ -341,8 +280,6 @@ public class AdvertiserApplication extends Application implements SignalReceiver
     @Override
     protected void finalize() {
         getSignalManager().removeReceiver(this);
-        if (portReader!=null)
-            portReader.close();
     }
 
 

@@ -16,8 +16,8 @@ repositories {
 
 def vMajor = 7
 def vMinor = 0
-def vPatch = 0
-def vSuffix = "S4NM"
+def vPatch = 2
+def vSuffix = "PG"
 
 android {
     compileSdkVersion 27
@@ -39,12 +39,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    externalNativeBuild {
-        ndkBuild {
-            path '../android-serialport-api/jni/Android.mk'
         }
     }
 
@@ -95,8 +89,3 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 
-crashlytics {
-    enableNdk true
-    androidNdkOut 'src/main/obj'
-    androidNdkLibsOut 'src/main/libs'
-}

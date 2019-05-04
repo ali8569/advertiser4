@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.markazandroid.advertiser.AdvertiserApplication;
-import ir.markazandroid.advertiser.BuildConfig;
-import ir.markazandroid.advertiser.hardware.PortReader;
 import ir.markazandroid.advertiser.network.JSONParser.Parser;
 import ir.markazandroid.advertiser.object.ErrorObject;
 import ir.markazandroid.advertiser.object.Record;
@@ -44,16 +42,8 @@ public class NetworkMangerImp implements NetworkManager {
 
     @Override
     public void getRecords(final OnResultLoaded.ActionListener<ArrayList<Record>> actionListener) {
-        String stats =PortReader.lastData+"__v"
-                + BuildConfig.VERSION_CODE
-                //+"__"
-                //+ getSensorMeter().getResults()+"__"
-                //+ getLocation()
-                ;
-        PortReader.save(stats);
         Request request = new Request.Builder()
-                .url(NetStatics.RECORD+"?stats="
-                        +stats)
+                .url(NetStatics.RECORD)
                 .get()
                 .build();
         client.newCall(request).enqueue(new CBack(context, tag) {
