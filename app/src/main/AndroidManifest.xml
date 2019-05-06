@@ -19,6 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+
+        <activity
+            android:name=".activity.GoldActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
+
         <provider
             android:name=".util.GenericFileProvider"
             android:authorities="${applicationId}.util.GenericFileProvider"

@@ -106,6 +106,8 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
     private PortReaderRunnable portReader;
     private ArrayList<ContentAdapter> contentAdapters;
 
+    private String goldTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -589,7 +591,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
     }
 
     @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+    public void onRequestPermissionsResult(int RC, String[] per, int[] PResult) {
         switch (RC) {
             case RequestPermissionCode:
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
@@ -889,14 +891,14 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
 
         }
 
-        String goldTitle = record.getExtras() == null ? "" : record.getExtras().getGoldTitle();
+        //goldTitle = record.getExtras() == null ? "" : record.getExtras().getGoldTitle();
 
-        if ("vertical_main".equalsIgnoreCase(record.getLayoutType())) {
+        /*if ("vertical_main".equalsIgnoreCase(record.getLayoutType())) {
             initJustGold(goldTitle);
         } else {
 
             switchToGold(goldTitle);
-        }
+        }*/
     }
 
     private void initExtras(Record record) {

@@ -66,6 +66,7 @@ import ir.markazandroid.advertiser.object.GoldEntity;
 import ir.markazandroid.advertiser.object.GoldListContainer;
 import ir.markazandroid.advertiser.object.ScreenShot;
 import ir.markazandroid.advertiser.signal.Signal;
+import ir.markazandroid.advertiser.signal.SignalReceiver;
 import ir.markazandroid.advertiser.util.Utils;
 import ir.markazandroid.advertiser.view.gold.CameraOverlayView;
 import ir.markazandroid.advertiser.view.gold.GoldShowAdapter;
@@ -73,7 +74,7 @@ import ir.markazandroid.advertiser.view.gold.ScannerAnimationView;
 import ir.markazandroid.advertiser.view.gold.camera.GoldCameraActivity;
 
 
-public class GoldViewerFragment extends BaseNetworkFragment {
+public class GoldViewerFragment extends BaseNetworkFragment implements SignalReceiver {
 
     private static final int PERMISION_REQUEST_CODE = 5;
     private static final String TITLE_EXTRA = "ir.markazandroid.advertiser.fragment.GoldViewerFragment.TITLE";
@@ -113,7 +114,7 @@ public class GoldViewerFragment extends BaseNetworkFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            title = args.getString(TITLE_EXTRA);
+            title = args.getString(TITLE_EXTRA, null);
         }
     }
 
@@ -233,6 +234,19 @@ public class GoldViewerFragment extends BaseNetworkFragment {
                 menuBmb.boom()
         );
 
+        if (title == null)
+            title = ((AdvertiserApplication) getActivity().getApplication()).getGoldTitle();
+
+
+        setTitle();
+
+        onSendScreenShots = new ConcurrentHashMap<>();
+
+        getSignalManager().addReceiver(this);
+    }
+
+
+    private void setTitle() {
         if (title != null && !title.isEmpty()) {
             goldTitle.setText(title);
             goldTitle.setVisibility(View.VISIBLE);
@@ -240,8 +254,6 @@ public class GoldViewerFragment extends BaseNetworkFragment {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) name.getLayoutParams();
             params.topMargin += Utils.dpToPx(getActivity(), 29);
         }
-
-        onSendScreenShots = new ConcurrentHashMap<>();
     }
 
     private TextOutsideCircleButton.Builder getDefaultBuilder(BoomMenuButton menu, String text, int iconId) {
@@ -519,6 +531,8 @@ public class GoldViewerFragment extends BaseNetworkFragment {
         if (ssPostTimer != null)
             ssPostTimer.cancel();
 
+        getSignalManager().removeReceiver(this);
+
     }
 
     private GoldDownloader getGoldDownloader() {
@@ -595,5 +609,15 @@ public class GoldViewerFragment extends BaseNetworkFragment {
                 getActivity().runOnUiThread(() -> onSendScreenShots.remove(screenShot.getFile()));
             }
         });
+    }
+
+    @Override
+    public boolean onSignal(Signal signal) {
+        if (signal.getType() == Signal.GOLD_TITLE_LOADED) {
+            title = (String) signal.getExtras();
+            setTitle();
+            return true;
+        }
+        return false;
     }
 }

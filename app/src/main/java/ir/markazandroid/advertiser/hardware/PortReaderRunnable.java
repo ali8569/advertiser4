@@ -79,7 +79,7 @@ public class PortReaderRunnable implements Runnable {
                 if (d < 100 && d > 0) {
                     if (!isBlocked) {
                         blockAcc++;
-                        if (blockAcc >= 5) {
+                        if (blockAcc >= 3) {
                             blockAcc = 0;
                             isBlocked = true;
                             sendBlockViewSignal();
@@ -229,7 +229,7 @@ public class PortReaderRunnable implements Runnable {
         try {
             //port.open(connection);
             //port.setParameters(9600, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-            byte buffer[] = new byte[1024];
+            byte[] buffer = new byte[1024];
 
             //isCancelled
             while (!isCancelled) {
@@ -304,17 +304,15 @@ public class PortReaderRunnable implements Runnable {
     }
 
     private void sendBlockViewSignal() {
-        //TODO no block
         //handler.post(()-> Toast.makeText(context,"Block",Toast.LENGTH_SHORT).show());
         Signal signal = new Signal("screen block", Signal.SIGNAL_SCREEN_BLOCK);
-        //getSignalManager().sendMainSignal(signal);
+        getSignalManager().sendMainSignal(signal);
     }
 
     private void sendUnBlockViewSignal() {
-        //TODO no block
         //handler.post(()-> Toast.makeText(context,"Unblock",Toast.LENGTH_SHORT).show());
         Signal signal = new Signal("screen unblock", Signal.SIGNAL_SCREEN_UNBLOCK);
-        //getSignalManager().sendMainSignal(signal);
+        getSignalManager().sendMainSignal(signal);
     }
 
     private static final String ACTION_USB_PERMISSION =

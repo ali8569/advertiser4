@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 import io.fabric.sdk.android.Fabric;
+import ir.markazandroid.advertiser.activity.GoldActivity;
 import ir.markazandroid.advertiser.activity.MainActivity;
 import ir.markazandroid.advertiser.activity.authentication.LoginActivity;
 import ir.markazandroid.advertiser.db.DataBase;
@@ -70,6 +71,8 @@ public class AdvertiserApplication extends Application implements SignalReceiver
     private LocationMgr locationMgr;
     private String frontActivity;
     private boolean igonrePoliceSignal = false;
+    private boolean isGoldShowing = false;
+    private String goldTitle;
 
     public NetworkClient getNetworkClient() {
         if (networkClient == null) {
@@ -203,7 +206,7 @@ public class AdvertiserApplication extends Application implements SignalReceiver
             return true;
         } else if (signal.getType() == Signal.START_MAIN_ACTIVITY) {
             if (getFrontActivity() == null && !igonrePoliceSignal) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, isGoldShowing ? GoldActivity.class : MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -218,8 +221,35 @@ public class AdvertiserApplication extends Application implements SignalReceiver
         } else if ((signal.getType() & Signal.DISABLE_POLICE) != 0) {
             Log.e(AdvertiserApplication.this.toString(), "disable police signal " /*+ user.getUsername()*/);
             igonrePoliceSignal = true;
+        } else if (signal.getType() == Signal.SIGNAL_SCREEN_BLOCK) {
+            showGold();
+            return true;
+        } else if (signal.getType() == Signal.SIGNAL_SCREEN_UNBLOCK) {
+            hideGold();
+            return true;
+        } else if (signal.getType() == Signal.GOLD_TITLE_LOADED) {
+            goldTitle = (String) signal.getExtras();
+            return true;
         }
+
         return false;
+
+    }
+
+    private void hideGold() {
+        isGoldShowing = false;
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void showGold() {
+        isGoldShowing = true;
+
+        Intent intent = new Intent(this, GoldActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public PreferencesManager getPreferencesManager() {
@@ -260,6 +290,10 @@ public class AdvertiserApplication extends Application implements SignalReceiver
 
     public void setFrontActivity(String frontActivity) {
         this.frontActivity = frontActivity;
+    }
+
+    public String getGoldTitle() {
+        return goldTitle;
     }
 
     private static class DeleteToken extends AsyncTask {

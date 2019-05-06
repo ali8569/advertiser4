@@ -16,8 +16,8 @@ repositories {
 
 
 def vMajor = 5
-def vMinor = 4
-def vPatch = 2
+def vMinor = 5
+def vPatch = 0
 def vSuffix = "Gold 270T90S4NM"
 
 android {
@@ -89,8 +89,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
 }
-
-
 
 
 apply plugin: 'com.google.gms.google-services'
