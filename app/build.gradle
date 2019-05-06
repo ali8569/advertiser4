@@ -18,7 +18,7 @@ repositories {
 def vMajor = 5
 def vMinor = 5
 def vPatch = 0
-def vSuffix = "Gold 270T90S4NM"
+def vSuffix = "Gold_270T90S4NM"
 
 android {
     compileSdkVersion 27
