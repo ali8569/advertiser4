@@ -5,12 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".activity.GoldActivity">
 
-
-    <fragment
+    <FrameLayout
+        android:id="@+id/goldViewerFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="ir.markazandroid.advertiser.fragment.GoldViewerFragment">
-
-    </fragment>
+        android:layout_height="match_parent"></FrameLayout>
 
 </FrameLayout>

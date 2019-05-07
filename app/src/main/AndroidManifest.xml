@@ -23,7 +23,7 @@
 
         <activity
             android:name=".activity.GoldActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="nosensor" />
 
         <provider
@@ -95,7 +95,9 @@
             android:name="io.fabric.ApiKey"
             android:value="894da9e4200b26c4fa075b526647186e411d07a3" />
 
-        <activity android:name=".view.gold.camera.GoldCameraActivity"></activity>
+        <activity android:name=".view.gold.camera.GoldCameraActivity">
+
+        </activity>
     </application>
 
 </manifest>

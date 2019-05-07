@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import ir.markazandroid.advertiser.R;
+import ir.markazandroid.advertiser.fragment.GoldViewerFragment;
 import ir.markazandroid.advertiser.signal.Signal;
 import ir.markazandroid.advertiser.signal.SignalReceiver;
 
@@ -14,6 +15,9 @@ public class GoldActivity extends BaseActivity implements SignalReceiver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gold);
         getSignalManager().addReceiver(this);
+
+        if (savedInstanceState == null)
+            getSupportFragmentManager().beginTransaction().add(R.id.goldViewerFragmentContainer, new GoldViewerFragment()).commit();
     }
 
     @Override
