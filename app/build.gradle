@@ -16,7 +16,7 @@ repositories {
 
 def vMajor = 7
 def vMinor = 0
-def vPatch = 3
+def vPatch = 4
 def vSuffix = "PG"
 
 android {
@@ -92,6 +92,9 @@ apply plugin: 'com.google.gms.google-services'
 
 /*Change Log
 
----v7.0.2
+---v7.0.4
+-now supports mirror events
+
+---v7.0.3
 -added finish with long click on version textView
  */
