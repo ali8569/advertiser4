@@ -208,6 +208,11 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
             //finish();
             //return true;
         });
+
+        version.setOnLongClickListener(v -> {
+            finish();
+            return true;
+        });
     }
 
     //2 part
@@ -574,7 +579,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
     }
 
     @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+    public void onRequestPermissionsResult(int RC, String[] per, int[] PResult) {
         switch (RC) {
             case RequestPermissionCode:
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {

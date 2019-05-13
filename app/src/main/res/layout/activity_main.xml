@@ -175,7 +175,7 @@
         android:textSize="10sp"
         android:id="@+id/version"
         android:alpha="0.5"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:text="2.21"/>
 
 

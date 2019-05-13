@@ -16,7 +16,7 @@ repositories {
 
 def vMajor = 7
 def vMinor = 0
-def vPatch = 2
+def vPatch = 3
 def vSuffix = "PG"
 
 android {
@@ -89,3 +89,9 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 
+
+/*Change Log
+
+---v7.0.2
+-added finish with long click on version textView
+ */
