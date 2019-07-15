@@ -45,104 +45,13 @@
 
         </View>
 
-        <android.support.constraint.ConstraintLayout
+        <ir.markazandroid.advertiser.view.WebPageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/addressbarContainer">
+            android:layout_weight="1"
+            android:id="@+id/webViewWidget">
 
-            </WebView>
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/webView"
-                android:background="@color/mat2">
-                <ImageView
-                    android:id="@+id/webViewBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_arrow_back_black_24dp"/>
-
-                <ImageView
-                    android:id="@+id/webViewForward"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_arrow_forward_black_24dp"/>
-
-                <ImageView
-                    android:id="@+id/webViewHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@id/webViewBack"
-                    app:layout_constraintRight_toLeftOf="@id/webViewForward"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_home_black_24dp"/>
-
-                <ProgressBar
-                    android:id="@+id/webViewProgressBar"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintLeft_toRightOf="@id/webViewBack"
-                    app:layout_constraintRight_toLeftOf="@id/webViewForward"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"
-                    android:padding="4dp"
-                    />
-
-            </android.support.constraint.ConstraintLayout>
-
-
-            <android.support.constraint.ConstraintLayout
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/addressbarContainer"
-                android:visibility="gone">
-                <EditText
-                    android:id="@+id/url"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/go"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:background="@android:color/white"
-                    android:hint="لطفا آدرس سایت را وارد کنید."/>
-                <Button
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/url"
-                    android:id="@+id/go"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مرور"/>
-            </android.support.constraint.ConstraintLayout>
-
-        </android.support.constraint.ConstraintLayout>
-
+        </ir.markazandroid.advertiser.view.WebPageView>
     </LinearLayout>
 
     <android.support.v7.widget.Toolbar
@@ -168,6 +77,22 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:layout_height="52dp" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="مشاهده منو امکانات"
+                android:background="@drawable/orange_box"
+                android:textColor="@android:color/white"
+                android:textSize="23sp"
+                android:visibility="invisible"
+                android:layout_marginTop="4dp"
+                android:drawableRight="@drawable/ic_apps_black_36dp"
+                android:layout_marginBottom="4dp"
+                android:padding="8dp"
+                android:id="@+id/backToMenuButton" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -12,6 +12,7 @@ public class RecordOptions {
     private boolean clockVisible=false;
     private boolean subtitleVisible=true;
     private boolean dateVisible=false;
+    private boolean backToMenuVisible = false;
 
     private int logoSize=52;
     private int timeTextSize=21;
@@ -78,5 +79,14 @@ public class RecordOptions {
 
     public void setCalendarType(String calendarType) {
         this.calendarType = calendarType;
+    }
+
+    @JSON
+    public boolean getBackToMenuVisible() {
+        return backToMenuVisible;
+    }
+
+    public void setBackToMenuVisible(boolean backToMenuVisible) {
+        this.backToMenuVisible = backToMenuVisible;
     }
 }

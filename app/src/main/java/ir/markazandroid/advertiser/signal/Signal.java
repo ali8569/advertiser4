@@ -27,6 +27,10 @@ public class Signal implements Serializable {
     public static final int SIGNAL_DEVICE_AUTHENTICATED =0x00004000;
     public static final int SIGNAL_CONNECTED_TO_POLICE =0x00008000;
     public static final int SIGNAL_DISCONNECTED_FROM_POLICE =0x00010000;
+    public static final int SIGNAL_DISABLE_KEEP_ALIVE = 0x00020000;
+    public static final int SIGNAL_ENABLE_KEEP_ALIVE = 0x00040000;
+
+    public static final int SIGNAL_LAUNCHING_3PARTY_APP = 0x00080000;
 
     private String msg;
     private int type;

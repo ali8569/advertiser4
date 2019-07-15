@@ -60,6 +60,21 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="مشاهده منو امکانات"
+                android:background="@drawable/orange_box"
+                android:textColor="@android:color/white"
+                android:textSize="23sp"
+                android:visibility="gone"
+                android:layout_marginTop="4dp"
+                android:drawableRight="@drawable/ic_apps_black_36dp"
+                android:layout_marginBottom="4dp"
+                android:padding="8dp"
+                android:id="@+id/backToMenuButton" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

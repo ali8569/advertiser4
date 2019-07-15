@@ -212,8 +212,10 @@ public class AdvertiserApplication extends Application implements SignalReceiver
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
-        }
-        else if (signal.getType()==Signal.OPEN_SOCKET_HEADER_RECEIVED){
+        } else if (signal.getType() == Signal.SIGNAL_ENABLE_KEEP_ALIVE) {
+            Intent starterIntent = new Intent(this, KeepAliveService.class);
+            startService(starterIntent);
+        } else if (signal.getType()==Signal.OPEN_SOCKET_HEADER_RECEIVED){
         }else if (signal.getType()==Signal.DOWNLOADER_NO_NETWORK){
             isInternetConnected=false;
         }else if (signal.getType()==Signal.DOWNLOADER_NETWORK){

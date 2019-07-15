@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -28,7 +27,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
@@ -82,6 +80,7 @@ import ir.markazandroid.advertiser.signal.SignalReceiver;
 import ir.markazandroid.advertiser.util.ContentAdapter;
 import ir.markazandroid.advertiser.util.Utils;
 import ir.markazandroid.advertiser.view.MQTextView;
+import ir.markazandroid.advertiser.view.WebPageView;
 
 public class MainActivity extends BaseActivity implements SignalReceiver, VideoFragment.VideoStateChangeListener {
 
@@ -113,11 +112,11 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
         //((AdvertiserApplication)getApplication()).installApp();
 
         //TODO decor
-       /* View decorView = getWindow().getDecorView();
+        View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LOW_PROFILE;
-        decorView.setSystemUiVisibility(uiOptions);*/
+        decorView.setSystemUiVisibility(uiOptions);
 
         //hideBars();
 
@@ -127,6 +126,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
 
 
         getSignalManager().addReceiver(this);
+        getSignalManager().sendMainSignal(new Signal(Signal.SIGNAL_ENABLE_KEEP_ALIVE));
 
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED ||
@@ -178,10 +178,18 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
         }
     }
 
+    private Button backToMenuButton;
+
 
     private void initMainLayout() {
         subtitle = findViewById(R.id.subtitle);
         subtitle.setSelected(true);
+
+        backToMenuButton = findViewById(R.id.backToMenuButton);
+        backToMenuButton.setOnClickListener(v -> {
+            exitAdvertising();
+        });
+        backToMenuButton.setVisibility(View.GONE);
 
         downloaderStats = findViewById(R.id.downlaoderStat);
         downloaderProgressStats = findViewById(R.id.downlaoderStatBar);
@@ -216,12 +224,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
     }
 
     //2 part
-    private WebView webView;
-    private Button go;
-    private ImageView webviewBack, webviewForward, webviewHome;
-    private EditText addressBar;
-    private ProgressBar webviewProgressBar;
-    private String homeUrl = "http://uniqtechco.com/";
+    private WebPageView webPageView;
 
     void init2PartLayer(boolean isHorizontal) {
         if (isHorizontal)
@@ -229,76 +232,12 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
         else
             setContentView(R.layout.vertical_twopart_activity_main);
         initMainLayout();
-        webView = findViewById(R.id.webView);
-        addressBar = findViewById(R.id.url);
-        go = findViewById(R.id.go);
-        webviewBack = findViewById(R.id.webViewBack);
-        webviewForward = findViewById(R.id.webViewForward);
-        webviewHome = findViewById(R.id.webViewHome);
-        webviewProgressBar = findViewById(R.id.webViewProgressBar);
-        webView.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                webLoading(true);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                webLoading(false);
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                // Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
-            }
-
-            @TargetApi(android.os.Build.VERSION_CODES.M)
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError rerr) {
-                // Redirect to deprecated method, so you can use it in all SDK versions
-                onReceivedError(view, rerr.getErrorCode(), rerr.getDescription().toString(), req.getUrl().toString());
-            }
-        });
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        webView.loadUrl(homeUrl);
+        webPageView = findViewById(R.id.webViewWidget);
 
 
-        go.setOnClickListener(v -> {
-            String u = addressBar.getText().toString();
-            webView.loadUrl(fixUrl(u));
-        });
-
-        webviewBack.setOnClickListener(v -> {
-            if (webView.canGoBack())
-                webView.goBack();
-
-        });
-        webviewForward.setOnClickListener(v -> {
-            if (webView.canGoForward())
-                webView.goForward();
-        });
-        webviewHome.setOnClickListener(v -> {
-            webView.clearHistory();
-            webView.loadUrl(homeUrl);
-        });
     }
 
-    private void webLoading(boolean isLoading) {
-        if (isLoading) {
-            Utils.fade(webviewProgressBar, webviewHome, 500);
-            Utils.fadeFade(webviewBack, 500, true);
-            Utils.fadeFade(webviewForward, 500, true);
-        } else {
-            Utils.fade(webviewHome, webviewProgressBar, 500);
-            Utils.fadeVisible(webviewBack, 500);
-            Utils.fadeVisible(webviewForward, 500);
-        }
-    }
 
     //3 part
     private ImageView staticImage;
@@ -922,8 +861,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
     private void init2PartExtras(ExtrasObject extrasObject) {
         if (extrasObject != null) {
             if (extrasObject.getWebViewUrl() != null && !extrasObject.getWebViewUrl().isEmpty()) {
-                homeUrl = fixUrl(extrasObject.getWebViewUrl());
-                webviewHome.callOnClick();
+                webPageView.init(extrasObject.getWebViewUrl());
             }
         }
     }
@@ -1081,6 +1019,7 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
             clock.setTextSize(options.getTimeTextSize());
             dateText.setVisibility(options.getDateVisible() ? View.VISIBLE : View.GONE);
             dateText.setTextSize(options.getTimeTextSize());
+            //backToMenuButton.setVisibility(options.getBackToMenuVisible() ? View.VISIBLE : View.INVISIBLE);
 
             logo.post(() -> {
                 logo.getLayoutParams().height = Utils.dpToPx(MainActivity.this, options.getLogoSize());
@@ -1208,8 +1147,16 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
             case Signal.SIGNAL_DISCONNECTED_FROM_POLICE:
                 stopAutoFetch();
                 return true;
+
+            case Signal.SIGNAL_LAUNCHING_3PARTY_APP:
+                exitAdvertising();
         }
         return false;
+    }
+
+    private void exitAdvertising() {
+        getSignalManager().sendMainSignal(new Signal(Signal.SIGNAL_DISABLE_KEEP_ALIVE));
+        finish();
     }
 
     private void unblockView() {
@@ -1269,6 +1216,10 @@ public class MainActivity extends BaseActivity implements SignalReceiver, VideoF
                 adapter.dispose();
             }
         }
+
+        if (webPageView != null)
+            webPageView.dispose();
+
         try {
             // if (!getRecorddownloader().isFinished())
 

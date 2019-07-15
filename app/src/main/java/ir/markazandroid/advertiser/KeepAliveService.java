@@ -16,8 +16,9 @@ import java.util.TimerTask;
 import ir.markazandroid.advertiser.activity.KeepAliveActivity;
 import ir.markazandroid.advertiser.signal.Signal;
 import ir.markazandroid.advertiser.signal.SignalManager;
+import ir.markazandroid.advertiser.signal.SignalReceiver;
 
-public class KeepAliveService extends Service {
+public class KeepAliveService extends Service implements SignalReceiver {
 
     private Timer timer;
     private boolean isStarted=false;
@@ -33,6 +34,7 @@ public class KeepAliveService extends Service {
     public void onCreate() {
         super.onCreate();
         signalManager=((AdvertiserApplication)getApplication()).getSignalManager();
+        signalManager.addReceiver(this);
     }
 
     @Override
@@ -108,12 +110,20 @@ public class KeepAliveService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        signalManager.removeReceiver(this);
         stopAndRelease();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
+    }
+
+    @Override
+    public boolean onSignal(Signal signal) {
+        if (signal.getType() == Signal.SIGNAL_DISABLE_KEEP_ALIVE)
+            stopAndRelease();
+        return true;
     }
 
     public class MyBinder extends Binder {

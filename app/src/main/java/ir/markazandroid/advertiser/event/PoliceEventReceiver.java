@@ -9,7 +9,7 @@ import ir.markazandroid.advertiser.AdvertiserApplication;
 import ir.markazandroid.advertiser.signal.Signal;
 import ir.markazandroid.advertiser.signal.SignalManager;
 
-public class EventReceiver extends BroadcastReceiver {
+public class PoliceEventReceiver extends BroadcastReceiver {
 
     private Context context;
 

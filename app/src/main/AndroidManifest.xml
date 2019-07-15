@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:persistent="true"
@@ -73,11 +74,20 @@
             android:value="894da9e4200b26c4fa075b526647186e411d07a3" />
 
         <receiver
-            android:name=".event.EventReceiver"
+            android:name=".event.PoliceEventReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="ir.markazandroid.police.event.BaseEvent.ACTION_EVENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".event.LauncherEventReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="ir.markazandroid.launcher.event.BaseEvent.ACTION_EVENT" />
             </intent-filter>
         </receiver>
 

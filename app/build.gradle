@@ -15,8 +15,8 @@ repositories {
 }
 
 def vMajor = 7
-def vMinor = 0
-def vPatch = 4
+def vMinor = 1
+def vPatch = 5
 def vSuffix = "PG"
 
 android {
@@ -91,6 +91,10 @@ apply plugin: 'com.google.gms.google-services'
 
 
 /*Change Log
+
+---v7.1.5
+-rebuild web widget
+-add multi app support (3party app)
 
 ---v7.0.4
 -now supports mirror events
